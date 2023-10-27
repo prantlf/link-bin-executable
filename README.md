@@ -7,6 +7,8 @@
 
 Helps creating a symbolic link to a (binary) executable in `.bin` during a package postinstall phase.
 
+Works well with [grab-github-release], if you want to download a binary executable from a GitHub release.
+
 ## Synopsis
 
 ```js
@@ -123,3 +125,4 @@ Copyright (c) 2023 Ferdinand Prantl
 Licensed under the MIT license.
 
 [Node.js]: http://nodejs.org/
+[grab-github-release]: https://github.com/prantlf/grab-github-release
