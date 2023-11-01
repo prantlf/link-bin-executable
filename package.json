@@ -1,6 +1,6 @@
 {
   "name": "link-bin-executable",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Helps creating a symbolic link to a (binary) executable in .bin during a package postinstall phase.",
   "author": {
     "name": "Ferdinand Prantl",

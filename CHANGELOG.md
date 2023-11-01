@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/prantlf/link-bin-executable/compare/v0.1.0...v0.1.1) (2023-11-01)
+
+
+### Bug Fixes
+
+* Replace broken links as well ([c6bd347](https://github.com/prantlf/link-bin-executable/commit/c6bd34752050e3bff58af1a4974b248504d3bdc5))
+
 # [0.1.0](https://github.com/prantlf/link-bin-executable/compare/v0.0.1...v0.1.0) (2023-11-01)
 
 
