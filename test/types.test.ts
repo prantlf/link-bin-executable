@@ -5,21 +5,21 @@ declare function test (label: string, callback: testCallback)
 
 test('Type declarations for TypeScript', () => {
   installLink({
-    name: '',
     packageDirectory: ''
   })
   installLink({
     name: '',
+    linkNames: [''],
     packageDirectory: '',
     executable: ''
   })
 
   runAndReplaceLink({
-    name: '',
     scriptDirectory: ''
   })
   runAndReplaceLink({
     name: '',
+    linkNames: [''],
     scriptDirectory: '',
     executable: ''
   })

@@ -63,11 +63,16 @@ async function replaceLink(bin, name, exe) {
   }
 }
 
-export async function runAndReplaceLink({ name, executable, scriptDirectory }) {
+async function replaceLinks(bin, linkNames, exe) {
+  return Promise.all(linkNames.map(name => replaceLink(bin, name, exe)))
+}
+
+export async function runAndReplaceLink({ name, linkNames, executable, scriptDirectory }) {
   if (!executable) executable = await findExeOnRun(name, scriptDirectory)
   if (platform != 'win32') {
     const bin = await findBinOnRun(scriptDirectory)
-    await replaceLink(bin, name, executable)
+    if (!linkNames) linkNames = [name]
+    await replaceLinks(bin, linkNames, executable)
   }
   await runExe(executable)
 }

@@ -1,6 +1,6 @@
 interface InstallLinkOptions {
   /**
-   * primary name of the symbolic link to create, default executable name
+   * primary name of the symbolic link to create and default executable name
    */
   name?: string
   /**
@@ -29,9 +29,14 @@ export function installLink(options: InstallLinkOptions): Promise<void>
 
 interface RunAndReplaceLinkOptions {
   /**
-   * name of the symbolic link to create
+   * primary name of the symbolic link to replace and default executable name
    */
-  name: string
+  name?: string
+  /**
+   * names of the symbolic links to replace; if not specified, `name` will be
+   * replaced, otherwise only the specified names will be replaced
+   */
+  linkNames?: string[]
   /**
    * bin directory where the javascript stub runs
    */

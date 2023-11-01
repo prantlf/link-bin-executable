@@ -76,6 +76,13 @@ if (platform !== 'win32') {
     const path = await realpath(link)
     ok(path.endsWith(name))
   })
+
+  test('replaces a specific link to a stub with a link to a specified executable', async () => {
+    await symlink(join(__dirname, 'stub.js'), link)
+    await runAndReplaceLink({ linkNames: [name], scriptDirectory: __dirname, executable })
+    const path = await realpath(link)
+    ok(path.endsWith(name))
+  })
 }
 
 test('reports a general error', async () => {

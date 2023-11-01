@@ -50,7 +50,7 @@ Make sure, that you use [Node.js] version 18 or newer.
 
 ```ts
 interface InstallLinkOptions {
-  // primary name of the symbolic link to create, default executable name
+  // primary name of the symbolic link to create and default executable name
   name?: string
   // names of the symbolic links to create; if not specified, `name` will be
   // created, otherwise only the specified names will be created
@@ -69,8 +69,11 @@ interface InstallLinkOptions {
 export function installLink(options: InstallLinkOptions): Promise<void>
 
 interface RunAndReplaceLinkOptions {
-  // name of the symbolic link to create
-  name: string
+  // primary name of the symbolic link to replace and default executable name
+  name?: string
+  // names of the symbolic links to replace; if not specified, `name` will be
+  // replaced, otherwise only the specified names will be replaced
+  linkNames?: string[]
   // bin directory where the javascript stub runs
   scriptDirectory: string
   // path to the executable to create the link to; if not specified, the file
