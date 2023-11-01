@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/prantlf/link-bin-executable/compare/v0.1.1...v0.2.0) (2023-11-01)
+
+
+### Features
+
+* Allow specifying multiple links in the runtime too ([79e5e94](https://github.com/prantlf/link-bin-executable/commit/79e5e9411aaa71d313ae84df91ded93d23a783c8))
+
 ## [0.1.1](https://github.com/prantlf/link-bin-executable/compare/v0.1.0...v0.1.1) (2023-11-01)
 
 
