@@ -1,9 +1,9 @@
 import { spawn } from 'child_process'
 import debug from 'debug'
-import { access, lstat, symlink, unlink } from 'fs/promises'
+import { lstat, symlink, unlink } from 'fs/promises'
 import { join } from 'path'
 
-const exists = file => access(file).then(() => true, () => false)
+const exists = file => lstat(file).then(() => true, () => false)
 const log = debug('linkbe')
 const { platform } = process
 
