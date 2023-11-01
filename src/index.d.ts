@@ -1,8 +1,13 @@
 interface InstallLinkOptions {
   /**
-   * name of the symbolic link to create
+   * primary name of the symbolic link to create, default executable name
    */
-  name: string
+  name?: string
+  /**
+   * names of the symbolic links to create; if not specified, `name` will be
+   * created, otherwise only the specified names will be created
+   */
+  linkNames?: string[]
   /**
    * package directory where the postinstall script runs
    */

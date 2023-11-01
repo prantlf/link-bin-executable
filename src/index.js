@@ -115,7 +115,7 @@ async function findExeOnInstall(name, packageDirectory) {
   return exe
 }
 
-async function link(bin, name, exe) {
+async function makeLink(bin, name, exe) {
   const link = join(bin, name)
   if (await exists(link)) {
     log('unlink "%s"', link)
@@ -125,8 +125,13 @@ async function link(bin, name, exe) {
   await symlink(exe, link, 'junction')
 }
 
-export async function installLink({ name, executable, packageDirectory }) {
+async function makeLinks(bin, linkNames, exe) {
+  return Promise.all(linkNames.map(name => makeLink(bin, name, exe)))
+}
+
+export async function installLink({ name, linkNames, executable, packageDirectory }) {
   if (!executable) executable = await findExeOnInstall(name, packageDirectory)
   const bin = await findBinOnInstall(packageDirectory)
-  await link(bin, name, executable)
+  if (!linkNames) linkNames = [name]
+  await makeLinks(bin, linkNames, executable)
 }

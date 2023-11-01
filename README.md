@@ -38,80 +38,58 @@ try {
 
 ## Installation
 
-This package can be installed globally, if you want to use the `link-bin-executable` script (or the `ggr` alias). You can install it during the first usage with `npx` too:
+This package is usually installed as a local dependency:
 
 ```sh
-$ npm i -g link-bin-executable
-$ npx link-bin-executable ...
-```
-
-This package can be installed locally too, if you want to use it programmatically:
-
-```sh
-$ npm i -g link-bin-executable
-$ npx link-bin-executable ...
+$ npm i link-bin-executable
 ```
 
 Make sure, that you use [Node.js] version 18 or newer.
 
-## Command-line Usage
-
-    Usage: [options]
-
-    Options:
-      -r|--repository <repository>  GitHub repository formatted "owner/name"
-      -i|--version-spec <semver>    semantic version specifier or "latest"
-      -n|--name <file-name>         archive name without the platform suffix
-      -p|--platform-suffixes <map>  unpack the executable and remove the archive
-      -e|--unpack-exe               unpack the executable and remove the archive
-      -v|--verbose                  prints extra information on the console
-      -V|--version                  print version number and exit
-      -h|--help                     print usage instructions and exit
-
-    The version specifier is "latest" by default. The file name will be inferred
-    from the first archive asset found for the current platform, if not specified.
-
-    Examples:
-      $ link-bin-executable -r prantlf/v-jsonlint -p darwin=macos,win32=windows -u
-      $ link-bin-executable -r prantlf/v-jsonlint -i >=0.0.6
-
 ## API
 
 ```ts
-// map where keys are Node.js platform names and values are their replacements
-// to be used in names of archive looked for among  GitHub release assets
-type PlatformSuffixes = Record<string, string>
-
-interface GrabOptions {
-  // GitHub repository formatted "owner/name", mandatory
-  repository: string
-  // semantic version specifier or "latest"; defaults to "latest", if unspecified
-  version?: string
-  // archive name without the platform and architecture suffix
-  // and without the ".zip" extension as well
+interface InstallLinkOptions {
+  // primary name of the symbolic link to create, default executable name
   name?: string
-  // archive name without the platform suffix; if not specified, it will be
-  // inferred from the first archive asset found for the current platform
-  platformSuffixes?: PlatformSuffixes
-  // directory to write the archive or executable to; if not specified,
-  // files will be written to the current directory
-  targetDirectory?: string
-  // unpack the executable and remove the archive
-  unpackExecutable?: boolean
-}
-
-interface GrabResult {
-  // actual version number as specified or picked from the list of releases
-  version: string
-  // downloaded archive name, if not removed (and the executable not unpacked)
-  archive?: string
-  // executable file name, if it was unpacked (and the archive removed)
+  // names of the symbolic links to create; if not specified, `name` will be
+  // created, otherwise only the specified names will be created
+  linkNames?: string[]
+  // package directory where the postinstall script runs
+  packageDirectory: string
+  // path to the executable to create the link to; if not specified, the file
+  // named by `name` will be looked up in the package directory
   executable?: string
 }
 
-// downloads and optionally unpacks an archive from GitHub release assets
-// for the current platform
-export default function grab(options: GrabOptions): GrabResult
+// creates a symbolic link in the `.bin` directory to the executable available
+// usually in the package directory
+ *
+// @param options see properties of `GrabOptions` for more information
+export function installLink(options: InstallLinkOptions): Promise<void>
+
+interface RunAndReplaceLinkOptions {
+  // name of the symbolic link to create
+  name: string
+  // bin directory where the javascript stub runs
+  scriptDirectory: string
+  // path to the executable to create the link to; if not specified, the file
+  // named by `name` will be looked up in the package directory
+  executable?: string
+}
+
+// replaces the just executed symbolic link to a javascript stub in the `.bin`
+// directory by a link to the executable available usually in the package
+// directory and delegates the process to the executable with the same arguments
+ *
+// @param options see properties of `GrabOptions` for more information
+export function runAndReplaceLink(options: RunAndReplaceLinkOptions): Promise<void>
+
+// prints the error message on the console and sets the process exit code
+// if `runAndReplaceLink` failed; supposed to be called from a catch block
+ *
+// @param err error thrown from `runAndReplaceLink`
+export function reportError(err: Error)
 ```
 
 ## Contributing

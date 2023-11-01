@@ -51,6 +51,11 @@ test('installs a link to a specified executable', async () => {
   ok(await exists(link), 'link not found')
 })
 
+test('installs a specific link to a specified executable', async () => {
+  await installLink({ linkNames: [name], packageDirectory, executable })
+  ok(await exists(link), 'link not found')
+})
+
 test('installs a link over an existing link', async () => {
   await symlink(join(__dirname, 'stub.js'), link)
   await installLink({ name, packageDirectory, executable })

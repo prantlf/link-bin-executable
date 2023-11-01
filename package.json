@@ -80,7 +80,7 @@
     "c8": "^8.0.1",
     "denolint": "2.0.14",
     "link-bin-executable": "link:",
-    "rollup": "^4.1.4",
+    "rollup": "^4.2.0",
     "rollup-plugin-cleanup": "^3.2.1",
     "typescript": "^5.2.2"
   },
