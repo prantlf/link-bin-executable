@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/prantlf/link-bin-executable/compare/v0.3.0...v0.3.1) (2023-11-04)
+
+
+### Bug Fixes
+
+* Fix local bin detection when installling ([0db0151](https://github.com/prantlf/link-bin-executable/commit/0db0151c11abd01c53431d36a43ec505f3634c74))
+
 # [0.3.0](https://github.com/prantlf/link-bin-executable/compare/v0.2.0...v0.3.0) (2023-11-04)
 
 
