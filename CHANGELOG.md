@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/prantlf/link-bin-executable/compare/v0.2.0...v0.3.0) (2023-11-04)
+
+
+### Features
+
+* Add verbose option to perform debug logging on stdout ([8fdc993](https://github.com/prantlf/link-bin-executable/commit/8fdc993012cc881817bcf26520cc4e019ac24663))
+
 # [0.2.0](https://github.com/prantlf/link-bin-executable/compare/v0.1.1...v0.2.0) (2023-11-01)
 
 
