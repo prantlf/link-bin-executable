@@ -94,7 +94,7 @@ async function findBinOnInstall(scriptDirectory) {
   if (!process.env.INIT_CWD) throw new Error('not running during npm install')
 
   // installed locally
-  let bin = join(scriptDirectory, '..', 'node_modules', '.bin')
+  let bin = join(scriptDirectory, '..', '.bin')
   log('local bin "%s"', bin)
   // installed globally
   if (!await exists(bin)) {
