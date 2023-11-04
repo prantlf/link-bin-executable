@@ -60,6 +60,9 @@ interface InstallLinkOptions {
   // path to the executable to create the link to; if not specified, the file
   // named by `name` will be looked up in the package directory
   executable?: string
+  // log debug messages on the standard output instead of being enabled
+  // by the DEBUG environment variable and log on the standard error
+  verbose?: boolean
 }
 
 // creates a symbolic link in the `.bin` directory to the executable available
@@ -79,6 +82,9 @@ interface RunAndReplaceLinkOptions {
   // path to the executable to create the link to; if not specified, the file
   // named by `name` will be looked up in the package directory
   executable?: string
+  // log debug messages on the standard output instead of being enabled
+  // by the DEBUG environment variable and log on the standard error
+  verbose?: boolean
 }
 
 // replaces the just executed symbolic link to a javascript stub in the `.bin`

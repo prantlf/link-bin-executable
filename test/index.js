@@ -13,7 +13,7 @@ const name = 'jsonlint'
 const packageDirectory = join(__dirname, '..')
 const binDirectory = join(__dirname, '..', 'node_modules', '.bin')
 const link = join(binDirectory, name)
-let executable = join(packageDirectory, name)
+const executable = join(packageDirectory, name)
 const script = `#!/bin/sh
 echo "$*"`
 
@@ -41,7 +41,7 @@ after(async () => {
 
 if (platform !== 'win32') {
   test('installs a link to an inferred executable', async () => {
-    await installLink({ name, packageDirectory })
+    await installLink({ name, packageDirectory, verbose: true })
     ok(await exists(link), 'link not found')
   })
 }
@@ -65,7 +65,7 @@ test('installs a link over an existing link', async () => {
 if (platform !== 'win32') {
   test('replaces a link to a stub with a link to an inferred executable', async () => {
     await symlink(join(__dirname, 'stub.js'), link)
-    await runAndReplaceLink({ name, scriptDirectory: __dirname })
+    await runAndReplaceLink({ name, scriptDirectory: __dirname, verbose: true })
     const path = await realpath(link)
     ok(path.endsWith(name))
   })
@@ -85,13 +85,13 @@ if (platform !== 'win32') {
   })
 }
 
-test('reports a general error', async () => {
+test('reports a general error', () => {
   reportError(new Error('test'))
   strictEqual(process.exitCode, 1)
   process.exitCode = 0
 })
 
-test('reports an error propagated from the child process', async () => {
+test('reports an error propagated from the child process', () => {
   reportError(2)
   strictEqual(process.exitCode, 2)
   process.exitCode = 0

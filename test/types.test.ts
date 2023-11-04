@@ -11,7 +11,8 @@ test('Type declarations for TypeScript', () => {
     name: '',
     linkNames: [''],
     packageDirectory: '',
-    executable: ''
+    executable: '',
+    verbose: true
   })
 
   runAndReplaceLink({
@@ -21,7 +22,8 @@ test('Type declarations for TypeScript', () => {
     name: '',
     linkNames: [''],
     scriptDirectory: '',
-    executable: ''
+    executable: '',
+    verbose: true
   })
 
   reportError(new Error())

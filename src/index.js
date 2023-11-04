@@ -4,7 +4,7 @@ import { lstat, symlink, unlink } from 'fs/promises'
 import { join } from 'path'
 
 const exists = file => lstat(file).then(() => true, () => false)
-const log = debug('linkbe')
+let log = debug('linkbe')
 const { platform } = process
 
 async function findExeOnRun(name, scriptDirectory) {
@@ -63,11 +63,12 @@ async function replaceLink(bin, name, exe) {
   }
 }
 
-async function replaceLinks(bin, linkNames, exe) {
+function replaceLinks(bin, linkNames, exe) {
   return Promise.all(linkNames.map(name => replaceLink(bin, name, exe)))
 }
 
-export async function runAndReplaceLink({ name, linkNames, executable, scriptDirectory }) {
+export async function runAndReplaceLink({ name, linkNames, executable, scriptDirectory, verbose }) {
+  if (verbose) log = console.log.bind(console)
   if (!executable) executable = await findExeOnRun(name, scriptDirectory)
   if (platform != 'win32') {
     const bin = await findBinOnRun(scriptDirectory)
@@ -130,11 +131,12 @@ async function makeLink(bin, name, exe) {
   await symlink(exe, link, 'junction')
 }
 
-async function makeLinks(bin, linkNames, exe) {
+function makeLinks(bin, linkNames, exe) {
   return Promise.all(linkNames.map(name => makeLink(bin, name, exe)))
 }
 
-export async function installLink({ name, linkNames, executable, packageDirectory }) {
+export async function installLink({ name, linkNames, executable, packageDirectory, verbose }) {
+  if (verbose) log = console.log.bind(console)
   if (!executable) executable = await findExeOnInstall(name, packageDirectory)
   const bin = await findBinOnInstall(packageDirectory)
   if (!linkNames) linkNames = [name]

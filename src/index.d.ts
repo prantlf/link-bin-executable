@@ -17,6 +17,11 @@ interface InstallLinkOptions {
    * named by `name` will be looked up in the package directory
    */
   executable?: string
+  /**
+   * log debug messages on the standard output instead of being enabled
+   * by the DEBUG environment variable and log on the standard error
+   */
+  verbose?: boolean
 }
 
 /**
@@ -46,6 +51,11 @@ interface RunAndReplaceLinkOptions {
    * named by `name` will be looked up in the package directory
    */
   executable?: string
+  /**
+   * log debug messages on the standard output instead of being enabled
+   * by the DEBUG environment variable and log on the standard error
+   */
+  verbose?: boolean
 }
 
 /**
