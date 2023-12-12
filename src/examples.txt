@@ -1,0 +1,47 @@
+// See https://github.com/npm/cmd-shim/blob/main/lib/index.js
+
+// #!/bin/sh
+// basedir=`dirname "$0"`
+//
+// case `uname` in
+//     *CYGWIN*|*MINGW*|*MSYS*)
+//       if command -v cygpath > /dev/null 2>&1; then
+//           basedir=`cygpath -w "$basedir"`
+//       fi
+//     ;;
+// esac
+//
+// if [ -x "$basedir/node.exe" ]; then
+//   exec "$basedir/node.exe" "$basedir/node_modules/npm/bin/npm-cli.js" "$@"
+// else
+//   exec node "$basedir/node_modules/npm/bin/npm-cli.js" "$@"
+// fi
+
+// #!/usr/bin/env pwsh
+// $basedir=Split-Path $MyInvocation.MyCommand.Definition -Parent
+//
+// $ret=0
+// $exe = ""
+// if ($PSVersionTable.PSVersion -lt "6.0" -or $IsWindows) {
+//   # Fix case when both the Windows and Linux builds of Node
+//   # are installed in the same directory
+//   $exe = ".exe"
+// }
+// if (Test-Path "$basedir/node") {
+//   # Suport pipeline input
+//   if ($MyInvocation.ExpectingInput) {
+//     input | & "$basedir/node$exe" "$basedir/node_modules/npm/bin/npm-cli.js" $args
+//   } else {
+//     & "$basedir/node$exe" "$basedir/node_modules/npm/bin/npm-cli.js" $args
+//   }
+//   $ret=$LASTEXITCODE
+// } else {
+//   # Support pipeline input
+//   if ($MyInvocation.ExpectingInput) {
+//     $input | & "node$exe" "$basedir/node_modules/npm/bin/npm-cli.js" $args
+//   } else {
+//     & "node$exe" "$basedir/node_modules/npm/bin/npm-cli.js" $args
+//   }
+//   $ret=$LASTEXITCODE
+// }
+// exit $ret

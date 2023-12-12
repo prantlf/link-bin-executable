@@ -11,6 +11,8 @@ Works well with [grab-github-release], if you want to download a binary executab
 
 ## Synopsis
 
+A script to install to `.bin` by an entry in `bin` in `package.json`:
+
 ```js
 #!/usr/bin/env node
 
@@ -23,16 +25,15 @@ try {
 }
 ```
 
+A script to install to `.bin` by an entry in `scripts.postinstall` in `package.json`:
+
 ```js
-import { installLink } from 'link-bin-executable'
+import { installLink, reportError } from 'link-bin-executable'
 
 try {
-  const name = 'myexecutable'
-  const executable = 'path to myexecutable or myexecutable.exe'
-  await installLink({ name, executable })
+  await installLink({ name: 'myexecutable' })
 } catch (err) {
-  console.error(err)
-  process.exitCode = 1
+  reportError(err)
 }
 ```
 

@@ -20,7 +20,7 @@ echo "$*"`
 async function cleanup() {
   join(__dirname, '..')
   // failed on Windows on GitHub
-  if (platform == 'win32') return
+  if (platform === 'win32') return
   if (await exists(link)) unlink(link)
 }
 

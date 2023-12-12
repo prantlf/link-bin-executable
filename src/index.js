@@ -6,10 +6,11 @@ import { join } from 'path'
 const exists = file => lstat(file).then(() => true, () => false)
 let log = debug('linkbe')
 const { platform } = process
+const windows = platform === 'win32'
 
 async function findExeOnRun(name, scriptDirectory) {
   /* c8 ignore next 5 */
-  const exe = join(scriptDirectory, '..', platform != 'win32' ? name : `${name}.exe`)
+  const exe = join(scriptDirectory, '..', windows ? `${name}.exe` : name)
   if (!await exists(exe)) {
     log('exe "%s"', exe)
     throw new Error('missing executable')
@@ -47,7 +48,7 @@ async function findBinOnRun(scriptDirectory) {
   return bin
 }
 
-async function replaceLink(bin, name, exe) {
+async function replaceSymlink(bin, name, exe) {
   const link = join(bin, name)
   log('stat "%s"', link)
   const { mode } = await lstat(link)
@@ -59,9 +60,56 @@ async function replaceLink(bin, name, exe) {
     return true
   /* c8 ignore next 3 */
   } else {
-    log('not writable')
+    log('"%s" not writable', link)
   }
 }
+
+/* c8 ignore next 45 */
+
+async function replaceCmd(bin, name, exe) {
+  const cmd = join(bin, `${name}.cmd`)
+  log('stat "%s"', cmd)
+  const { mode } = await lstat(cmd)
+  if (mode & 0o222) {
+    log('unlink "%s"', cmd)
+    await unlink(cmd)
+    log('write "%s"', cmd)
+    await writeFile(cmd, `"${exe}" %*`)
+    return true
+  } else {
+    log('"%s" not writable', cmd)
+  }
+}
+
+async function replacePs(bin, name, exe) {
+  const ps = join(bin, `${name}.ps1`)
+  log('stat "%s"', ps)
+  const { mode } = await lstat(ps)
+  if (mode & 0o222) {
+    log('unlink "%s"', ps)
+    await unlink(ps)
+    log('write "%s"', ps)
+    await writeFile(ps, `#!/usr/bin/env pwsh
+if ($MyInvocation.ExpectingInput) {
+  $input | & "${exe}" $args
+} else {
+  & "${exe}" $args
+}
+exit $LASTEXITCODE`)
+    return true
+  } else {
+    log('"%s" not writable', ps)
+  }
+}
+
+function replaceCmdAndPs(bin, name, exe) {
+  return Promise.all([
+    replaceCmd(bin, name, exe),
+    replacePs(bin, name, exe)
+  ])
+}
+
+const replaceLink = windows ? replaceCmdAndPs : replaceSymlink
 
 function replaceLinks(bin, linkNames, exe) {
   return Promise.all(linkNames.map(name => replaceLink(bin, name, exe)))
@@ -70,11 +118,9 @@ function replaceLinks(bin, linkNames, exe) {
 export async function runAndReplaceLink({ name, linkNames, executable, scriptDirectory, verbose }) {
   if (verbose) log = console.log.bind(console)
   if (!executable) executable = await findExeOnRun(name, scriptDirectory)
-  if (platform != 'win32') {
-    const bin = await findBinOnRun(scriptDirectory)
-    if (!linkNames) linkNames = [name]
-    await replaceLinks(bin, linkNames, executable)
-  }
+  const bin = await findBinOnRun(scriptDirectory)
+  if (!linkNames) linkNames = [name]
+  await replaceLinks(bin, linkNames, executable)
   await runExe(executable)
 }
 
@@ -113,7 +159,7 @@ async function findBinOnInstall(scriptDirectory) {
 
 async function findExeOnInstall(name, packageDirectory) {
   /* c8 ignore next 5 */
-  const exe = join(packageDirectory, platform != 'win32' ? name : `${name}.exe`)
+  const exe = join(packageDirectory, windows ? `${name}.exe` : name)
   if (!await exists(exe)) {
     log('exe "%s"', exe)
     throw new Error('missing executable')
