@@ -1,3 +1,19 @@
+# [1.0.0](https://github.com/prantlf/link-bin-executable/compare/v0.3.1...v1.0.0) (2023-12-12)
+
+
+### Features
+
+* Use .cmd and .ps1 files on Windows ([6d8f80a](https://github.com/prantlf/link-bin-executable/commit/6d8f80a7a01d51e421832fb950dea211a1e56b00))
+
+
+### BREAKING CHANGES
+
+* Although the previous version did not work on Windows
+in my tests, for somebdy it might. The new version creates .cmd and .ps1
+files instead of the links. The junction will not exist in .bin after
+installing a package. Otherwise the functionality did not change. The
+binary can be run just by the file name with no file extension.
+
 ## [0.3.1](https://github.com/prantlf/link-bin-executable/compare/v0.3.0...v0.3.1) (2023-11-04)
 
 
