@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/prantlf/link-bin-executable/compare/v1.0.0...v1.0.1) (2023-12-12)
+
+
+### Bug Fixes
+
+* Install .cmd and .ps1 files on Windows ([efff95d](https://github.com/prantlf/link-bin-executable/commit/efff95da5b7ee18c615e72bc731f34a949e83faf))
+
 # [1.0.0](https://github.com/prantlf/link-bin-executable/compare/v0.3.1...v1.0.0) (2023-12-12)
 
 
