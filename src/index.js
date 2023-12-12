@@ -1,6 +1,6 @@
 import { spawn } from 'child_process'
 import debug from 'debug'
-import { lstat, symlink, unlink } from 'fs/promises'
+import { lstat, symlink, unlink, writeFile } from 'fs/promises'
 import { join } from 'path'
 
 const exists = file => lstat(file).then(() => true, () => false)
