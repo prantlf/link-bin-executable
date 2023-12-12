@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/prantlf/link-bin-executable/compare/v1.0.1...v1.0.2) (2023-12-12)
+
+
+### Bug Fixes
+
+* Fix missing declaration of wrioteFile ([56e637b](https://github.com/prantlf/link-bin-executable/commit/56e637b3170db5706588bd0fc9608a0b3eb566e1))
+
 ## [1.0.1](https://github.com/prantlf/link-bin-executable/compare/v1.0.0...v1.0.1) (2023-12-12)
 
 
