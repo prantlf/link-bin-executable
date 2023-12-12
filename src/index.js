@@ -56,7 +56,7 @@ async function replaceSymlink(bin, name, exe) {
     log('unlink "%s"', link)
     await unlink(link)
     log('link "%s"', link)
-    await symlink(exe, link, 'junction')
+    await symlink(exe, link)
     return true
   /* c8 ignore next 3 */
   } else {
@@ -167,15 +167,52 @@ async function findExeOnInstall(name, packageDirectory) {
   return exe
 }
 
-async function makeLink(bin, name, exe) {
+async function makeSymlink(bin, name, exe) {
   const link = join(bin, name)
   if (await exists(link)) {
     log('unlink "%s"', link)
     await unlink(link)
   }
   log('link "%s"', link)
-  await symlink(exe, link, 'junction')
+  await symlink(exe, link)
 }
+
+/* c8 ignore next 35 */
+
+async function makeCmd(bin, name, exe) {
+  const cmd = join(bin, `${name}.cmd`)
+  if (await exists(cmd)) {
+    log('unlink "%s"', cmd)
+    await unlink(cmd)
+  }
+  log('write "%s"', cmd)
+  await writeFile(cmd, `"${exe}" %*`)
+}
+
+async function makePs(bin, name, exe) {
+  const ps = join(bin, `${name}.ps1`)
+  if (await exists(ps)) {
+    log('unlink "%s"', ps)
+    await unlink(ps)
+  }
+  log('write "%s"', ps)
+  await writeFile(ps, `#!/usr/bin/env pwsh
+if ($MyInvocation.ExpectingInput) {
+  $input | & "${exe}" $args
+} else {
+  & "${exe}" $args
+}
+exit $LASTEXITCODE`)
+}
+
+function makeCmdAndPs(bin, name, exe) {
+  return Promise.all([
+    makeCmd(bin, name, exe),
+    makePs(bin, name, exe)
+  ])
+}
+
+const makeLink = windows ? makeCmdAndPs : makeSymlink
 
 function makeLinks(bin, linkNames, exe) {
   return Promise.all(linkNames.map(name => makeLink(bin, name, exe)))
