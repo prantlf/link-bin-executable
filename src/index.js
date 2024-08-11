@@ -1,7 +1,7 @@
-import { spawn } from 'child_process'
+import { spawn } from 'node:child_process'
 import debug from 'debug'
-import { lstat, symlink, unlink, writeFile } from 'fs/promises'
-import { join } from 'path'
+import { lstat, symlink, unlink, writeFile } from 'node:fs/promises'
+import { join } from 'node:path'
 
 const exists = file => lstat(file).then(() => true, () => false)
 let log = debug('linkbe')
@@ -59,9 +59,8 @@ async function replaceSymlink(bin, name, exe) {
     await symlink(exe, link)
     return true
   /* c8 ignore next 3 */
-  } else {
-    log('"%s" not writable', link)
   }
+    log('"%s" not writable', link)
 }
 
 /* c8 ignore next 45 */
@@ -76,9 +75,8 @@ async function replaceCmd(bin, name, exe) {
     log('write "%s"', cmd)
     await writeFile(cmd, `"${exe}" %*`)
     return true
-  } else {
-    log('"%s" not writable', cmd)
   }
+    log('"%s" not writable', cmd)
 }
 
 async function replacePs(bin, name, exe) {
@@ -97,9 +95,8 @@ if ($MyInvocation.ExpectingInput) {
 }
 exit $LASTEXITCODE`)
     return true
-  } else {
-    log('"%s" not writable', ps)
   }
+    log('"%s" not writable', ps)
 }
 
 function replaceCmdAndPs(bin, name, exe) {

@@ -14,7 +14,9 @@ export default [
         sourcemap: true
       }
     ],
-    external: ['child_process', 'debug', 'fs/promises', 'path'],
+    external: [
+      'node:child_process', 'debug', 'node:fs/promises', 'node:path'
+    ],
     plugins: [cleanup()]
   }
 ]

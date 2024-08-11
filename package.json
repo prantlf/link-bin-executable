@@ -38,7 +38,7 @@
   ],
   "scripts": {
     "build": "rollup -c && cp-j src/index.d.ts dist/",
-    "lint": "denolint && tsc --noEmit test/types.test.ts",
+    "lint": "biome lint *.js src test && tsc --noEmit test/types.test.ts",
     "check": "node test/cjs.cjs && node test/index",
     "cover": "c8 node test/index",
     "test": "tsc --noEmit test/types.test.ts && node test/cjs.cjs && node test/index",
@@ -56,16 +56,16 @@
     "statements": 100
   },
   "dependencies": {
-    "debug": "^4.3.4"
+    "debug": "^4.3.6"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
     "@unixcompat/cp.js": "^3.0.0",
-    "c8": "^9.1.0",
-    "denolint": "2.0.14",
+    "c8": "^10.1.2",
     "link-bin-executable": "link:",
-    "rollup": "^4.13.2",
+    "rollup": "^4.20.0",
     "rollup-plugin-cleanup": "^3.2.1",
-    "typescript": "^5.4.3"
+    "typescript": "^5.5.4"
   },
   "keywords": [
     "install",

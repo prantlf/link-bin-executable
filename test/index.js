@@ -1,9 +1,9 @@
-import { ok, strictEqual } from 'assert'
-import { access, chmod, writeFile, realpath, symlink, unlink } from 'fs/promises'
+import { ok, strictEqual } from 'node:assert'
+import { access, chmod, writeFile, realpath, symlink, unlink } from 'node:fs/promises'
 import { after, afterEach, before, beforeEach, test } from 'node:test'
 import { installLink, runAndReplaceLink, reportError } from 'link-bin-executable'
-import { dirname, join } from 'path'
-import { fileURLToPath } from 'url'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const exists = file => access(file).then(() => true, () => false)
 const __dirname = dirname(fileURLToPath(import.meta.url))
