@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/prantlf/link-bin-executable/compare/v1.0.2...v1.0.3) (2024-08-11)
+
+### Bug Fixes
+
+* Upgrade dependencies ([a1e0c24](https://github.com/prantlf/link-bin-executable/commit/a1e0c2497119f3198c7df7570d27ae839308e917))
+
 ## [1.0.2](https://github.com/prantlf/link-bin-executable/compare/v1.0.1...v1.0.2) (2023-12-12)
 
 
